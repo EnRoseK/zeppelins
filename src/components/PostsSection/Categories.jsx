@@ -1,41 +1,40 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+
 export const Categories = () => {
-    return (
-        <ul>
-            <li className='active'>
-                <a href='/' className='categLink active'>
-                    All
-                </a>
-            </li>
-            <li>
-                <a href='/' className='categLink'>
-                    UI Design
-                </a>
-            </li>
-            <li>
-                <a href='/' className='categLink'>
-                    UX Design
-                </a>
-            </li>
-            <li>
-                <a href='/' className='categLink'>
-                    Product Design
-                </a>
-            </li>
-            <li>
-                <a href='/' className='categLink'>
-                    Articles
-                </a>
-            </li>
-            <li>
-                <a href='/' className='categLink'>
-                    Tutorials
-                </a>
-            </li>
-            <li>
-                <a href='/' className='categLink'>
-                    News
-                </a>
-            </li>
-        </ul>
-    );
+  const [categories, setCategories] = useState([
+    { title: "All", link: "/" },
+    { title: "UI Design", link: "/?category=uiDesign" },
+    { title: "UX Design", link: "/?category=uxDesign" },
+    { title: "Product Design", link: "/?category=productDesign" },
+    { title: "Articles", link: "/?category=articles" },
+    { title: "Tutorials", link: "/?category=tutorials" },
+    { title: "News", link: "/?category=news" },
+  ]);
+
+  const location = useLocation();
+
+  return (
+    <ul>
+      {categories.map((category) => {
+        return (
+          <li
+            className={
+              location.pathname + location.search === category.link && "active"
+            }
+          >
+            <Link
+              to={category.link}
+              className={`categLink ${
+                location.pathname + location.search === category.link &&
+                "active"
+              }`}
+            >
+              {category.title}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
 };
